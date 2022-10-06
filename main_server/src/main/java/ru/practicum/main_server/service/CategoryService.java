@@ -32,19 +32,19 @@ public class CategoryService {
 
     public CategoryDto getCategoryById(long id) {
 
-        return CategoryMapper.toCategoryDto(categoryRepository.findById(id).get());
+        return CategoryMapper.toCategoryDto(categoryRepository.findById(id).orElseThrow());
     }
 
     @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = categoryRepository.findById(categoryDto.getId()).get();
+        Category category = categoryRepository.findById(categoryDto.getId()).orElseThrow();
         category.setName(categoryDto.getName());
         return CategoryMapper.toCategoryDto(categoryRepository.save(category));
     }
 
     @Transactional
     public void deleteCategory(Long catId) {
-        Category category = categoryRepository.findById(catId).get();
+        Category category = categoryRepository.findById(catId).orElseThrow();
         categoryRepository.delete(category);
     }
 
