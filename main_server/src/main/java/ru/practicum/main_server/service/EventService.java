@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional(readOnly = true)
 public class EventService {
+    public static final int MIN_HOURS = 2;
     private final EventRepository eventRepository;
     private final ParticipationRepository participationRepository;
     private final UserService userService;
@@ -124,7 +125,7 @@ public class EventService {
         if (updateEventRequest.getEventDate() != null) {
             LocalDateTime date = LocalDateTime.parse(updateEventRequest.getEventDate(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            if (date.isBefore(LocalDateTime.now().minusHours(2))) {
+            if (date.isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
                 throw new WrongRequestException("date event is too late");
             }
             event.setEventDate(date);
@@ -154,7 +155,7 @@ public class EventService {
         log.info("location save");
         Event event = EventMapper.toNewEvent(newEventDto);
         log.info("event {}", event);
-        if (event.getEventDate().isBefore(LocalDateTime.now().minusHours(2))) {
+        if (event.getEventDate().isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
             throw new WrongRequestException("date event is too late");
         }
         event.setInitiator(userService.checkAndGetUser(userId));
@@ -234,7 +235,7 @@ public class EventService {
         if (adminUpdateEventRequest.getEventDate() != null) {
             LocalDateTime date = LocalDateTime.parse(adminUpdateEventRequest.getEventDate(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            if (date.isBefore(LocalDateTime.now().minusHours(2))) {
+            if (date.isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
                 throw new WrongRequestException("date event is too late");
             }
             event.setEventDate(date);
@@ -262,7 +263,7 @@ public class EventService {
     @Transactional
     public EventFullDto publishEventByAdmin(Long eventId) {
         Event event = checkAndGetEvent(eventId);
-        if (event.getEventDate().isBefore(LocalDateTime.now().minusHours(2))) {
+        if (event.getEventDate().isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
             throw new WrongRequestException("date event is too late");
         }
         if (!event.getState().equals(State.PENDING)) {
@@ -307,7 +308,7 @@ public class EventService {
 
     public int getViews(long eventId) {
         ResponseEntity<Object> responseEntity = hitClient.getStat(
-                LocalDateTime.of(2020, 9, 1, 0, 0),
+                LocalDateTime.MIN,
                 LocalDateTime.now(),
                 List.of("/events/" + eventId),
                 false);
