@@ -20,7 +20,7 @@ public class EventPublicController {
     }
 
     @GetMapping()
-    List<EventShortDto> getAllEvents(
+    public List<EventShortDto> getAllEvents(
             @RequestParam(required = false) String text,
             @RequestParam List<Long> categories,
             @RequestParam Boolean paid,
@@ -32,7 +32,7 @@ public class EventPublicController {
             @RequestParam(defaultValue = "10") int size,
             HttpServletRequest request) {
         log.info("get events public");
-        eventService.sentHitStat(request);
+        eventService.sentHitStat(request.getRequestURI(), request.getRemoteAddr());
         return eventService.getEvents(
                 text,
                 categories,
@@ -46,9 +46,9 @@ public class EventPublicController {
     }
 
     @GetMapping("/{id}")
-    EventFullDto getEventById(@PathVariable long id, HttpServletRequest request) {
+    public EventFullDto getEventById(@PathVariable long id, HttpServletRequest request) {
         log.info("get event id={}", id);
-        eventService.sentHitStat(request);
+        eventService.sentHitStat(request.getRequestURI(), request.getRemoteAddr());
         return eventService.getEventById(id);
     }
 }

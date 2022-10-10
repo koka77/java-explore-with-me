@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.main_server.model.Location;
 
+import javax.validation.constraints.NotEmpty;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventFullDto {
 
+    @NotEmpty
     private Long id;
     private String annotation;
     private CategoryDto category;

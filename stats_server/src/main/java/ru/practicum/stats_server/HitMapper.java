@@ -9,13 +9,16 @@ import java.time.format.DateTimeFormatter;
 
 @UtilityClass
 public class HitMapper {
+
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public static HitModel toHitModel(EndpointHit endpointHit) {
         return HitModel.builder()
                 .app(endpointHit.getApp())
                 .ip(endpointHit.getIp())
                 .uri(endpointHit.getUri())
                 .timestamp(LocalDateTime.parse(endpointHit.getTimestamp(),
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                        DATE_TIME_FORMATTER))
                 .build();
     }
 
@@ -25,7 +28,7 @@ public class HitMapper {
                 .app(hitModel.getApp())
                 .ip(hitModel.getIp())
                 .uri(hitModel.getUri())
-                .timestamp(hitModel.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .timestamp(hitModel.getTimestamp().format(DATE_TIME_FORMATTER))
                 .build();
     }
 }

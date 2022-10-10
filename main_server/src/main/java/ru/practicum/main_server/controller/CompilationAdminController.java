@@ -6,6 +6,8 @@ import ru.practicum.main_server.dto.CompilationDto;
 import ru.practicum.main_server.dto.NewCompilationDto;
 import ru.practicum.main_server.service.CompilationService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "admin/compilations")
 @Slf4j
@@ -17,7 +19,7 @@ public class CompilationAdminController {
     }
 
     @PostMapping
-    public CompilationDto addCompilation(@RequestBody NewCompilationDto newCompilationDto) {
+    public CompilationDto addCompilation(@Valid @RequestBody NewCompilationDto newCompilationDto) {
         log.info("add compilation");
         return compilationService.createCompilation(newCompilationDto);
     }

@@ -6,6 +6,8 @@ import ru.practicum.main_server.dto.*;
 import ru.practicum.main_server.service.EventService;
 import ru.practicum.main_server.service.ParticipationService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,7 @@ public class EventPrivateController {
     }
 
     @GetMapping()
-    List<EventShortDto> getEventsCurrentUser(@PathVariable long userId,
+    public List<EventShortDto> getEventsCurrentUser(@PathVariable long userId,
                                              @RequestParam(defaultValue = "0") int from,
                                              @RequestParam(defaultValue = "10") int size) {
         log.info("get events current userId{}", userId);
@@ -33,14 +35,14 @@ public class EventPrivateController {
 
     @PatchMapping
     public EventFullDto updateEvent(@PathVariable Long userId,
-                                    @RequestBody UpdateEventRequest updateEventRequest) {
+                                    @NotEmpty @RequestBody UpdateEventRequest updateEventRequest) {
         log.info("update event  userId{}", userId);
         return eventService.updateEvent(userId, updateEventRequest);
     }
 
     @PostMapping
     public EventFullDto addEvent(@PathVariable Long userId,
-                                    @RequestBody NewEventDto newEventDto) {
+                                    @Valid  @RequestBody NewEventDto newEventDto) {
         log.info("create event  userId{} {}", userId, newEventDto);
         return eventService.createEvent(userId, newEventDto);
     }

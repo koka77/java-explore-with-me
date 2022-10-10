@@ -19,7 +19,7 @@ public class CompilationPublicController {
     }
 
     @GetMapping()
-    List<CompilationDto> getAllCompilations(@RequestParam Boolean pinned,
+    public List<CompilationDto> getAllCompilations(@RequestParam Boolean pinned,
                                          @RequestParam(defaultValue = "0") int from,
                                          @RequestParam(defaultValue = "10") int size) {
         log.info("get compilations pinned {}", pinned);
@@ -27,7 +27,7 @@ public class CompilationPublicController {
     }
 
     @GetMapping("/{id}")
-    CompilationDto getCompilationById(@PathVariable long id) {
+    public CompilationDto getCompilationById(@PathVariable long id) {
         log.info("get compilation id={}", id);
         return compilationService.getCompilationById(id);
     }

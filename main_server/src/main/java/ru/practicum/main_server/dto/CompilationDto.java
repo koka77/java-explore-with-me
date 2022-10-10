@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
@@ -17,7 +18,7 @@ public class CompilationDto {
 
     private List<EventShortDto> events;
 
-    @NotNull
+    @NotEmpty
     private String title;
     private boolean pinned;
 }

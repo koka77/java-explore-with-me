@@ -322,12 +322,12 @@ public class EventService {
         return 0;
     }
 
-    public void sentHitStat(HttpServletRequest request) {
-        log.info("request URL {}", request.getRequestURI());
+    public void sentHitStat(String uri, String remoteAddr) {
+        log.info("request URL {}", uri);
         EndpointHit endpointHit = EndpointHit.builder()
                 .app("main_server")
-                .uri(request.getRequestURI())
-                .ip(request.getRemoteAddr())
+                .uri(uri)
+                .ip(remoteAddr)
                 .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
         hitClient.createHit(endpointHit);

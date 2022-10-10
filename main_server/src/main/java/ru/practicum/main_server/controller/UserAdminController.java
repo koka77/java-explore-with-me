@@ -6,10 +6,11 @@ import ru.practicum.main_server.dto.NewUserRequest;
 import ru.practicum.main_server.dto.UserDto;
 import ru.practicum.main_server.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "admin/users")
+@RequestMapping(path = "/admin/users")
 @Slf4j
 public class UserAdminController {
 
@@ -29,7 +30,7 @@ public class UserAdminController {
     }
 
     @PostMapping
-    public UserDto addUser(@RequestBody NewUserRequest newUserRequest) {
+    public UserDto addUser(@Valid @RequestBody NewUserRequest newUserRequest) {
         log.info("add user");
         return userService.saveUser(newUserRequest);
     }
