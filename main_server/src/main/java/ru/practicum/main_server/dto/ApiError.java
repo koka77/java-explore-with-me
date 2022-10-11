@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ApiError {
 
+    @NotBlank
     private List<Error> errors;
+    @NotEmpty
     private String message;
     private String reason;
     private String status;

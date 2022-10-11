@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class HitService {
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final HitRepository hitRepository;
 
     @Autowired
@@ -45,9 +46,9 @@ public class HitService {
 
     public List<ViewStats> getViewStats(String start, String end, List<String> uris, Boolean unique) throws UnsupportedEncodingException {
         LocalDateTime startDate = LocalDateTime.parse(
-                start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                start, DATE_TIME_FORMATTER
         );
-        LocalDateTime endDate = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime endDate = LocalDateTime.parse(end, DATE_TIME_FORMATTER);
         List<ViewStats> viewStatsList = new ArrayList<>();
         if (uris == null) {
             uris = hitRepository.findAllByTimestampBetween(startDate, endDate)

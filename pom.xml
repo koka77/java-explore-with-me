@@ -149,7 +149,7 @@
     </build>
     <profiles>
         <profile>
-            <id>check</id>
+            <id>checkstyle</id>
             <build>
                 <plugins>
                     <plugin>

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,6 +22,8 @@ public class Event {
     private Long id;
 
     @Column(name = "annotation", nullable = false)
+    @NotNull
+    @Size(max = 1000)
     private String annotation;
 
     @ManyToOne
@@ -29,9 +33,11 @@ public class Event {
     private LocalDateTime createdOn;
 
     @Column(name = "description")
+    @Size(max = 1000)
     private String description;
 
     @Column(name = "event_date", nullable = false)
+    @NotNull
     private LocalDateTime eventDate;
 
     @ManyToOne
@@ -41,6 +47,7 @@ public class Event {
     private Location location;
 
     @Column(name = "paid", nullable = false)
+    @NotNull
     private boolean paid;
 
     @Column(name = "participant_limit")
@@ -56,5 +63,6 @@ public class Event {
     private State state;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 }

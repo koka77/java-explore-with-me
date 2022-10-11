@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,6 +29,7 @@ public class Participation {
     @ManyToOne
     private User requester;
 
+    @Size(max = 20)
     @Enumerated(EnumType.STRING)
     private StatusRequest status;
 }

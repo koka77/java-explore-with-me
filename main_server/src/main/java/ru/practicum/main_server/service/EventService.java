@@ -15,7 +15,6 @@ import ru.practicum.main_server.repository.CategoryRepository;
 import ru.practicum.main_server.repository.EventRepository;
 import ru.practicum.main_server.repository.ParticipationRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -28,6 +27,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class EventService {
     public static final int MIN_HOURS = 2;
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final EventRepository eventRepository;
     private final ParticipationRepository participationRepository;
     private final UserService userService;
@@ -35,7 +35,11 @@ public class EventService {
     private final CategoryRepository categoryRepository;
     private final LocationService locationService;
 
-    public EventService(EventRepository eventRepository, ParticipationRepository participationRepository, HitClient hitClient, UserService userService, CategoryRepository categoryRepository, LocationService locationService) {
+    public EventService(EventRepository eventRepository,
+                        ParticipationRepository participationRepository,
+                        HitClient hitClient, UserService userService,
+                        CategoryRepository categoryRepository,
+                        LocationService locationService) {
         this.eventRepository = eventRepository;
         this.participationRepository = participationRepository;
         this.userService = userService;
@@ -50,13 +54,13 @@ public class EventService {
         if (rangeStart == null) {
             start = LocalDateTime.now();
         } else {
-            start = LocalDateTime.parse(rangeStart, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            start = LocalDateTime.parse(rangeStart, DATE_TIME_FORMATTER);
         }
         LocalDateTime end;
         if (rangeEnd == null) {
             end = LocalDateTime.MAX;
         } else {
-            end = LocalDateTime.parse(rangeEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            end = LocalDateTime.parse(rangeEnd, DATE_TIME_FORMATTER);
         }
 
         List<Event> events = eventRepository.searchEvents(text, categories, paid, start, end,
@@ -124,7 +128,7 @@ public class EventService {
         }
         if (updateEventRequest.getEventDate() != null) {
             LocalDateTime date = LocalDateTime.parse(updateEventRequest.getEventDate(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    DATE_TIME_FORMATTER);
             if (date.isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
                 throw new WrongRequestException("date event is too late");
             }
@@ -199,13 +203,13 @@ public class EventService {
         if (rangeStart == null) {
             start = LocalDateTime.now();
         } else {
-            start = LocalDateTime.parse(rangeStart, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            start = LocalDateTime.parse(rangeStart, DATE_TIME_FORMATTER);
         }
         LocalDateTime end;
         if (rangeEnd == null) {
             end = LocalDateTime.MAX;
         } else {
-            end = LocalDateTime.parse(rangeEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            end = LocalDateTime.parse(rangeEnd, DATE_TIME_FORMATTER);
         }
 
         return eventRepository.searchEventsByAdmin(users, states, categories, start, end,
@@ -234,7 +238,7 @@ public class EventService {
         }
         if (adminUpdateEventRequest.getEventDate() != null) {
             LocalDateTime date = LocalDateTime.parse(adminUpdateEventRequest.getEventDate(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    DATE_TIME_FORMATTER);
             if (date.isBefore(LocalDateTime.now().minusHours(MIN_HOURS))) {
                 throw new WrongRequestException("date event is too late");
             }
@@ -328,7 +332,7 @@ public class EventService {
                 .app("main_server")
                 .uri(uri)
                 .ip(remoteAddr)
-                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .timestamp(LocalDateTime.now().format(DATE_TIME_FORMATTER))
                 .build();
         hitClient.createHit(endpointHit);
     }
