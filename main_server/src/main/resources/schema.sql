@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS events
     participant_limit  INTEGER,
     published_on       TIMESTAMP,
     request_moderation BOOLEAN,
-    state              VARCHAR(255),
+    state              VARCHAR(20),
     title              VARCHAR(512)                            NOT NULL,
     CONSTRAINT pk_events PRIMARY KEY (id),
     CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE,

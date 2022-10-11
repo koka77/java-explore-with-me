@@ -3,6 +3,7 @@ package ru.practicum.main_server.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -26,6 +27,7 @@ public class Compilation {
     private List<Event> events;
 
     @Column(name = "title", nullable = false)
+    @Size(max = 512)
     private String title;
 
     @Column(name = "pinned")

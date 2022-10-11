@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -13,14 +15,21 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class EventShortDto {
 
-    @NotEmpty
+    @NotNull
     private Long id;
+    @NotNull
     private String annotation;
+    @NotNull
     private CategoryDto category;
     private int confirmedRequests;
+    @NotNull
     private String eventDate;
+    @NotNull
     private UserShortDto initiator;
+    @NotNull
     private boolean paid;
+    @NotNull
+    @Size(max = 512)
     private String title;
     private int views;
 }

@@ -21,12 +21,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Size(max = 255)
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
     @Size(max = 50)
     @Column(name = "email", nullable = false)
     private String email;

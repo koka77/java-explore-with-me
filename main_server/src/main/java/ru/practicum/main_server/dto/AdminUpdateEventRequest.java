@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ru.practicum.main_server.model.Location;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -14,14 +15,18 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class AdminUpdateEventRequest {
 
-    @NotEmpty
+    @NotNull
     private String annotation;
+    @NotNull
     private Long category;
     private String description;
+    @NotNull
     private String eventDate;
     private Location location;
+    @NotNull
     private Boolean paid;
     private Integer participantLimit;
     private Boolean requestModeration;
+    @NotNull
     private String title;
 }

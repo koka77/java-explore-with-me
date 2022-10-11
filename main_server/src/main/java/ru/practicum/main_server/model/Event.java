@@ -37,7 +37,6 @@ public class Event {
     private String description;
 
     @Column(name = "event_date", nullable = false)
-    @NotNull
     private LocalDateTime eventDate;
 
     @ManyToOne
@@ -47,7 +46,6 @@ public class Event {
     private Location location;
 
     @Column(name = "paid", nullable = false)
-    @NotNull
     private boolean paid;
 
     @Column(name = "participant_limit")
@@ -62,7 +60,6 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private State state;
 
-    @Column(name = "title")
-    @NotNull
+    @Column(name = "title", nullable = false)
     private String title;
 }

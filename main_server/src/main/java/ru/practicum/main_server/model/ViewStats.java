@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -14,8 +15,9 @@ import javax.validation.constraints.NotEmpty;
 public class ViewStats {
 
     @NotEmpty
+    @Size(max = 512)
     private String app;
-    @NotEmpty
+    @Size(max = 512)
     private String uri;
     private int hits;
 }
