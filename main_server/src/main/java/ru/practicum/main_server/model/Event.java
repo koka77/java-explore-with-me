@@ -61,5 +61,6 @@ public class Event {
     private State state;
 
     @Column(name = "title", nullable = false)
+    @Size(max = 512)
     private String title;
 }

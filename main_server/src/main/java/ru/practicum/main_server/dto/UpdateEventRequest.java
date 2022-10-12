@@ -26,6 +26,7 @@ public class UpdateEventRequest {
     @Size(max = 1000)
     private String description;
     @NotNull
+    @Size(max = 30)
     private String eventDate;
     @NotNull
     private Boolean paid;

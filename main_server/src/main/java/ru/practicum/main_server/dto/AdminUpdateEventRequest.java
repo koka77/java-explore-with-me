@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.main_server.model.Location;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -16,6 +18,7 @@ import javax.validation.constraints.NotNull;
 public class AdminUpdateEventRequest {
 
     @NotNull
+    @Size(max = 1000)
     private String annotation;
     @NotNull
     private Long category;
@@ -28,5 +31,6 @@ public class AdminUpdateEventRequest {
     private Integer participantLimit;
     private Boolean requestModeration;
     @NotNull
+    @Size(max = 512)
     private String title;
 }

@@ -18,12 +18,14 @@ import javax.validation.constraints.Size;
 public class NewEventDto {
 
     @NotNull
+    @Size(max = 1000)
     private String annotation;
     @NotNull
     private long category;
     @Size(max = 1000)
     private String description;
     @NotNull
+    @Size(max = 30)
     private String eventDate;
     private Location location;
     @NotNull

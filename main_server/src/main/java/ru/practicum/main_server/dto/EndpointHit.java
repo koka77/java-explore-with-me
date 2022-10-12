@@ -24,5 +24,6 @@ public class EndpointHit {
     @Size(max = 30)
     private String ip;
     @NotNull
+    @Size(max = 30)
     private String timestamp;
 }
