@@ -22,6 +22,7 @@ public class AdminUpdateEventRequest {
     private String annotation;
     @NotNull
     private Long category;
+    @Size(max = 1000)
     private String description;
     @NotNull
     private String eventDate;
