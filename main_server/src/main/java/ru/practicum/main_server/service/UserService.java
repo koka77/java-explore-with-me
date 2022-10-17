@@ -24,6 +24,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User findById(Long id) {
+        return userRepository.findUserById(id);
+    }
 
     public List<UserDto> getUsers(List<Long> ids, int from, int size) {
         if (ids.isEmpty()) {

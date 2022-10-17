@@ -34,18 +34,20 @@ public class EventService {
     private final HitClient hitClient;
     private final CategoryRepository categoryRepository;
     private final LocationService locationService;
+    private final EventMapper eventMapper;
 
     public EventService(EventRepository eventRepository,
                         ParticipationRepository participationRepository,
                         HitClient hitClient, UserService userService,
                         CategoryRepository categoryRepository,
-                        LocationService locationService) {
+                        LocationService locationService, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.participationRepository = participationRepository;
         this.userService = userService;
         this.hitClient = hitClient;
         this.categoryRepository = categoryRepository;
         this.locationService = locationService;
+        this.eventMapper = eventMapper;
     }
 
     public List<EventShortDto> getEvents(String text, List<Long> categories, Boolean paid, String rangeStart,
@@ -93,7 +95,7 @@ public class EventService {
     }
 
     public EventFullDto getEventById(long id) {
-        EventFullDto dto = EventMapper.toEventFullDto(checkAndGetEvent(id));
+        EventFullDto dto = eventMapper.toEventFullDto(checkAndGetEvent(id));
         if (!(dto.getState().equals(State.PUBLISHED.toString()))) {
             throw new WrongRequestException("Wrong state by request");
         }
@@ -147,7 +149,7 @@ public class EventService {
             event.setTitle(updateEventRequest.getTitle());
         }
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
@@ -169,7 +171,7 @@ public class EventService {
         event.setLocation(location);
 
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
@@ -178,7 +180,7 @@ public class EventService {
         if (!event.getInitiator().getId().equals(userId)) {
             throw new WrongRequestException("only initiator can get fullEventDto");
         }
-        return setConfirmedRequestsAndViewsEventFullDto(EventMapper.toEventFullDto(event));
+        return setConfirmedRequestsAndViewsEventFullDto(eventMapper.toEventFullDto(event));
     }
 
     @Transactional
@@ -192,7 +194,7 @@ public class EventService {
         }
         event.setState(State.CANCELED);
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
@@ -215,7 +217,7 @@ public class EventService {
         return eventRepository.searchEventsByAdmin(users, states, categories, start, end,
                         PageRequest.of(from / size, size))
                 .stream()
-                .map(EventMapper::toEventFullDto)
+                .map(eventMapper::toEventFullDto)
                 .map(this::setConfirmedRequestsAndViewsEventFullDto)
                 .collect(Collectors.toList());
     }
@@ -260,7 +262,7 @@ public class EventService {
             event.setTitle(adminUpdateEventRequest.getTitle());
         }
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
@@ -275,7 +277,7 @@ public class EventService {
         }
         event.setState(State.PUBLISHED);
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
@@ -285,7 +287,7 @@ public class EventService {
 
         event.setState(State.CANCELED);
         event = eventRepository.save(event);
-        EventFullDto eventFullDto = EventMapper.toEventFullDto(event);
+        EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         return setConfirmedRequestsAndViewsEventFullDto(eventFullDto);
     }
 
