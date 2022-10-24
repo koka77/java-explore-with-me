@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS comments
     text      VARCHAR(512) NOT NULL,
     event_id  BIGINT REFERENCES events (id) ON DELETE CASCADE,
     author_id BIGINT REFERENCES users (id) ON DELETE CASCADE,
-    created   TIMESTAMP
+    created   TIMESTAMP NOT NULL
 );
 
 

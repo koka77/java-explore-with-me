@@ -8,7 +8,7 @@ import ru.practicum.main_server.service.EventService;
 import ru.practicum.main_server.service.ParticipationService;
 
 @RestController
-@RequestMapping(path = "/users/")
+@RequestMapping(path = "/users/{userId}")
 @Slf4j
 public class CommentController {
     private final EventService eventService;
@@ -19,7 +19,7 @@ public class CommentController {
         this.participationService = participationService;
     }
 
-    @PostMapping("{userId}/events/{eventId}/comment")
+    @PostMapping("/events/{eventId}/comment")
       CommentDto createComment(@PathVariable Long userId,
                                     @PathVariable Long eventId,
                                     @RequestBody CommentDto commentDto) {
@@ -27,14 +27,14 @@ public class CommentController {
         return participationService.createComment(userId, eventId, commentDto);
     }
 
-    @DeleteMapping("{userId}/comment/{comId}")
+    @DeleteMapping("/comment/{comId}")
       void deleteComment(@PathVariable Long userId,
                               @PathVariable Long comId) {
         log.info("delete comment by userId={} and comId{}", userId, comId);
         participationService.deleteComment(userId, comId);
     }
 
-    @PatchMapping("{userId}/events/{eventId}/comment")
+    @PatchMapping("/events/{eventId}/comment")
       CommentDto updateComment(@PathVariable Long userId,
                                     @PathVariable Long eventId,
                                     @RequestBody UpdateComment updateComment) {
