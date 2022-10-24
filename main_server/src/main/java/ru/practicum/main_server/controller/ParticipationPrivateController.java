@@ -36,7 +36,6 @@ public class ParticipationPrivateController {
     public ParticipationRequestDto cancel(
             @PathVariable Long userId,
             @PathVariable Long requestId) {
-        log.info("cancel participation requests by userId{} requestId {}", userId, requestId);
         return participationService.cancelRequestByUser(userId, requestId);
     }
 }
